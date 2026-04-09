@@ -1,4 +1,4 @@
-# WebNovel to EPUB
+<img width="1402" height="1166" alt="Atomic2" src="https://github.com/user-attachments/assets/907175d1-520c-4081-a618-793d1fdff8d7" /># WebNovel to EPUB
 
 A multithreaded Java application that downloads chapters from RoyalRoad and builds them into one EPUB file.
 
@@ -79,20 +79,8 @@ C:\Users\<your-user>\Downloads\<novel-slug>.epub
 
 ## Example Console Output
 
-```text
-============================
-||    WEBNOVEL TO EPUB    ||
-============================
-Supported websites: RoyalRoad
-Enter novel URL: https://www.royalroad.com/fiction/12345/example-title
-[RoyalRoad] Found 120 chapters.
-Found 120 chapters. Starting download...
-[Producer] Queuing chapter 1
-[Consumer-1] Fetching chapter 1
-...
-EPUB saved to: C:\Users\YourName\Downloads\example-title.epub
-All done.
-```
+<img width="514" height="318" alt="Screenshot 2026-04-09 151337" src="https://github.com/user-attachments/assets/115dc6e8-3a6a-461d-b521-c94751a6e1bf" />
+
 
 ## OOP and Concurrency Notes
 
