@@ -15,6 +15,7 @@ import java.util.concurrent.ConcurrentMap;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
+        // User input
         Scanner scanner = new Scanner(System.in);
         System.out.println("============================");
         System.out.println("||    WEBNOVEL TO EPUB    ||");
@@ -47,26 +48,31 @@ public class Main {
         // Three consumers
         int consumerCount = 3;
         ChapterQueue queue = new ChapterQueue();
-        ConcurrentMap<Integer, Chapter> chapterStore = new ConcurrentHashMap<>();
+        ConcurrentMap<Integer, Chapter> chapterStore = new ConcurrentHashMap<>(); // thread-safe storage
 
-        // Start consumers first so they are ready when producer begins
+        // Start consumers first so they are ready when producer starts putting tasks
         Thread[] consumers = new Thread[consumerCount];
         for (int i = 0; i < consumerCount; i++) {
             consumers[i] = new Thread(new Consumer(queue, chapterStore, site, "Consumer-" + (i + 1)));
             consumers[i].start();
         }
 
+        // Start producer thread
+        // Part wheer producer is putting tasks into queue
         Thread producer = new Thread(new Producer(queue, chapterUrls, consumerCount));
         producer.start();
+        // Wait for producer to finish adding all tasks
         producer.join();
 
+        // Wait for all consumers to finish processing
         for (Thread c : consumers)
             c.join();
 
-        // Sort by chapter order and build EPUB
+        // Convert unordered concurrent results into ordered list
         List<Chapter> ordered = new ArrayList<>(chapterStore.values());
         Collections.sort(ordered, (a, b) -> a.getId() - b.getId());
 
+        //Build final EPUB file from ordered chapters
         try {
             new EpubBuilder().build(novelSlug, ordered);
         } catch (Exception e) {

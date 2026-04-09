@@ -9,6 +9,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
+// Handles scraping of chapter titles, content, and URLs.
+
+
 public class RoyalRoadSite implements NovelSite {
 
     @Override
@@ -16,6 +21,8 @@ public class RoyalRoadSite implements NovelSite {
         return "royalroad";
     }
 
+    // Returns the base referrer URL required for requests
+    // Because some sites blocks requests withhout a valid referrer
     @Override
     public String getReferrer() {
         return "https://www.royalroad.com";
@@ -35,6 +42,9 @@ public class RoyalRoadSite implements NovelSite {
         return "Chapter " + chapterNumber;
     }
 
+    // Cleans chapters
+    // Removes hidden elements, ads, and scripts.
+    
     @Override
     public String parseContent(Document doc, String chapterUrl) {
         StringBuilder content = new StringBuilder();
@@ -63,8 +73,10 @@ public class RoyalRoadSite implements NovelSite {
             .timeout(15_000)
             .get();
 
+        // Extract all links
         for (Element link : doc.select("a[href]")) {
             String href = link.attr("abs:href");
+            // Only keep chapter links and avoid duplicates
             if (href.contains("/chapter/") && !urls.contains(href)) {
                 urls.add(href);
             }

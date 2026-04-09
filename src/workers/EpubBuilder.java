@@ -27,14 +27,19 @@ public class EpubBuilder {
                 "<p>" + c.getContent().replace("&", "&amp;") + "</p>\n" +
                 "</body></html>";
 
+            // Unique filename for each chapter inside the EPUB
             String fileName = "chapter-" + c.getId() + ".xhtml";
+
+            // Convert XHTML string into a resource (file inside EPUB)
             Resource resource = new Resource(html.getBytes("UTF-8"), fileName);
             book.addSection("Chapter " + c.getId(), resource);
         }
 
+        // Save EPUB file to user's Downloads folder.
         String outputPath = System.getProperty("user.home") + File.separator
                           + "Downloads" + File.separator + title + ".epub";
 
+        // Write EPUB file to disk
         try (FileOutputStream out = new FileOutputStream(outputPath)) {
             new EpubWriter().write(book, out);
         }
