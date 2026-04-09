@@ -1,4 +1,4 @@
-<img width="1402" height="1166" alt="Atomic2" src="https://github.com/user-attachments/assets/907175d1-520c-4081-a618-793d1fdff8d7" /># WebNovel to EPUB
+# WebNovel to EPUB
 
 A multithreaded Java application that downloads chapters from RoyalRoad and builds them into one EPUB file.
 
